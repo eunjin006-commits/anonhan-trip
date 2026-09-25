@@ -1,21 +1,20 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>안온한 여행</title>
 
   <style>
     :root{
       --bg:#fbf8f3;
-      --card:#fff;
+      --card:#ffffff;
       --text:#292723;
       --muted:#777269;
-      --line:#e9e2d8;
-      --accent:#70886c;
-      --accent-soft:#eaf0e7;
+      --line:#eae3d9;
+      --accent:#6d8468;
+      --accent-soft:#e9efe6;
       --yellow:#f5ebcf;
-      --pink:#fbefec;
       --shadow:0 18px 50px rgba(60,50,40,.08);
       --radius:26px;
     }
@@ -24,10 +23,15 @@
 
     body{
       margin:0;
-      font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      font-family:
+        Pretendard,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
       background:
-        radial-gradient(circle at 0 0,#f6eee6 0,transparent 35%),
-        radial-gradient(circle at 100% 20%,#edf1e8 0,transparent 35%),
+        radial-gradient(circle at 10% 0%, #f6eee6 0, transparent 35%),
+        radial-gradient(circle at 100% 20%, #edf1e8 0, transparent 35%),
         var(--bg);
       color:var(--text);
     }
@@ -38,10 +42,6 @@
 
     button{
       cursor:pointer;
-    }
-
-    a{
-      color:inherit;
     }
 
     .app{
@@ -104,7 +104,8 @@
       position:absolute;
       inset:0;
       opacity:.35;
-      background-image:radial-gradient(circle,#7f8d78 1px,transparent 1px);
+      background-image:
+        radial-gradient(circle,#7f8d78 1px,transparent 1px);
       background-size:24px 24px;
     }
 
@@ -150,9 +151,9 @@
     }
 
     .eyebrow{
-      color:var(--accent);
       font-size:14px;
       font-weight:800;
+      color:var(--accent);
       margin-bottom:10px;
     }
 
@@ -169,23 +170,11 @@
       letter-spacing:-.04em;
     }
 
-    h3{
-      margin:0;
-    }
-
-    .hero-copy,
-    .top p{
-      color:var(--muted);
-      line-height:1.7;
-    }
-
     .hero-copy{
       margin:18px 0 30px;
       font-size:17px;
-    }
-
-    .top{
-      margin:18px 0 26px;
+      line-height:1.7;
+      color:var(--muted);
     }
 
     .primary{
@@ -219,30 +208,46 @@
       font-weight:700;
     }
 
-    .progress{
-      display:flex;
-      gap:8px;
-      margin-bottom:26px;
+    .top{
+      margin:18px 0 26px;
     }
 
-    .progress i{
-      flex:1;
-      height:5px;
-      border-radius:999px;
-      background:#e6e0d7;
-    }
-
-    .progress i.on{
-      background:var(--accent);
+    .top p{
+      margin:8px 0 0;
+      color:var(--muted);
+      line-height:1.6;
     }
 
     .card{
-      background:rgba(255,255,255,.92);
+      background:rgba(255,255,255,.9);
       border:1px solid var(--line);
       border-radius:var(--radius);
       padding:20px;
       box-shadow:var(--shadow);
       margin-bottom:14px;
+    }
+
+    .saved-box{
+      background:var(--accent-soft);
+      border:1px solid #d9e3d4;
+      border-radius:26px;
+      padding:20px;
+      margin-bottom:20px;
+    }
+
+    .saved-family{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:14px 0;
+    }
+
+    .saved-chip{
+      background:#fff;
+      padding:8px 11px;
+      border-radius:999px;
+      font-size:13px;
+      border:1px solid #d8e1d4;
     }
 
     .choice{
@@ -251,6 +256,7 @@
       background:#fff;
       border-radius:20px;
       padding:18px 12px;
+      transition:.2s;
     }
 
     .choice.selected{
@@ -259,14 +265,18 @@
     }
 
     .choice .emoji{
-      display:block;
       font-size:29px;
+      display:block;
       margin-bottom:7px;
     }
 
     .name-box{
       display:none;
       margin-top:12px;
+    }
+
+    .field{
+      margin-bottom:18px;
     }
 
     label{
@@ -285,14 +295,10 @@
       color:var(--text);
     }
 
-    .field{
-      margin-bottom:18px;
-    }
-
     .member-name{
       display:flex;
-      gap:10px;
       align-items:center;
+      gap:10px;
       margin-bottom:14px;
     }
 
@@ -306,15 +312,20 @@
       justify-content:center;
     }
 
+    .member-name strong{
+      font-size:18px;
+    }
+
     .section-title{
-      font-weight:800;
       margin:24px 0 12px;
+      font-weight:800;
     }
 
     .section-desc{
-      margin:-6px 0 12px;
-      color:var(--muted);
+      margin-top:-6px;
+      margin-bottom:12px;
       font-size:13px;
+      color:var(--muted);
     }
 
     .tags{
@@ -347,6 +358,23 @@
       border-color:#8b6f68;
     }
 
+    .progress{
+      display:flex;
+      gap:8px;
+      margin-bottom:26px;
+    }
+
+    .progress i{
+      flex:1;
+      height:5px;
+      border-radius:999px;
+      background:#e6e0d7;
+    }
+
+    .progress i.on{
+      background:var(--accent);
+    }
+
     .segmented{
       display:grid;
       grid-template-columns:repeat(2,1fr);
@@ -374,67 +402,6 @@
       margin-top:26px;
     }
 
-    .saved-box{
-      background:var(--accent-soft);
-      border:1px solid #d9e3d4;
-      border-radius:26px;
-      padding:20px;
-      margin-bottom:20px;
-    }
-
-    .saved-family{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin:14px 0;
-    }
-
-    .saved-chip{
-      background:#fff;
-      padding:8px 11px;
-      border-radius:999px;
-      font-size:13px;
-      border:1px solid #d8e1d4;
-    }
-
-    .save-family-box{
-      margin-top:22px;
-      padding:18px;
-      border-radius:20px;
-      background:#f3f7f0;
-      border:1px solid #dfe8db;
-    }
-
-    .small{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.5;
-    }
-
-    .loading{
-      min-height:65vh;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      padding:30px;
-    }
-
-    .spinner{
-      width:52px;
-      height:52px;
-      border-radius:50%;
-      border:5px solid #e2e7df;
-      border-top-color:var(--accent);
-      animation:spin .8s linear infinite;
-      margin-bottom:24px;
-    }
-
-    @keyframes spin{
-      to{transform:rotate(360deg)}
-    }
-
     .result-card{
       background:#fff;
       border:1px solid var(--line);
@@ -452,14 +419,14 @@
     }
 
     .rank-number{
-      color:var(--muted);
       font-size:12px;
+      color:var(--muted);
       font-weight:800;
     }
 
     .rank h3{
-      margin-top:4px;
-      font-size:27px;
+      margin:4px 0;
+      font-size:25px;
     }
 
     .score{
@@ -479,7 +446,7 @@
       padding:15px;
       line-height:1.6;
       font-size:14px;
-      margin-bottom:15px;
+      margin-bottom:14px;
     }
 
     .reason{
@@ -487,34 +454,32 @@
       gap:8px;
       margin-bottom:8px;
       font-size:14px;
-      line-height:1.5;
     }
 
     .warning{
-      background:var(--pink);
+      background:#fbefec;
       border-radius:14px;
       padding:12px;
       font-size:13px;
       margin-top:14px;
-      line-height:1.5;
     }
 
     .route{
-      margin-top:18px;
-      padding-top:18px;
+      margin-top:16px;
+      padding-top:16px;
       border-top:1px solid var(--line);
     }
 
     .route-title{
       font-weight:800;
-      margin-bottom:11px;
+      margin-bottom:10px;
     }
 
     .route-line{
       display:flex;
-      align-items:center;
       flex-wrap:wrap;
       gap:7px;
+      align-items:center;
       font-size:13px;
     }
 
@@ -524,59 +489,23 @@
       border-radius:12px;
     }
 
-    .spots{
-      display:grid;
-      gap:10px;
-      margin-top:10px;
+    .save-family-box{
+      margin-top:22px;
+      padding:18px;
+      border-radius:20px;
+      background:#f3f7f0;
+      border:1px solid #dfe8db;
     }
 
-    .spot{
-      border:1px solid var(--line);
-      border-radius:17px;
-      padding:14px;
-      background:#fff;
+    .save-family-box strong{
+      display:block;
+      margin-bottom:6px;
     }
 
-    .spot-head{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-    }
-
-    .spot-name{
-      font-weight:800;
-      font-size:15px;
-    }
-
-    .spot-category{
-      margin-top:4px;
+    .small{
+      font-size:13px;
       color:var(--muted);
-      font-size:12px;
-    }
-
-    .spot-address{
-      color:#68645e;
-      font-size:12px;
-      margin-top:7px;
       line-height:1.5;
-    }
-
-    .spot-links{
-      display:flex;
-      gap:7px;
-      margin-top:11px;
-    }
-
-    .spot-link{
-      flex:1;
-      text-align:center;
-      text-decoration:none;
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:9px;
-      font-size:12px;
-      font-weight:700;
-      background:#f9f8f5;
     }
 
     .result-actions{
@@ -614,15 +543,6 @@
       font-size:12px;
       line-height:1.7;
     }
-
-    .error-box{
-      padding:20px;
-      border-radius:20px;
-      background:#fff4f1;
-      border:1px solid #edd9d4;
-      margin-top:20px;
-      line-height:1.6;
-    }
   </style>
 </head>
 
@@ -637,18 +557,19 @@
     <div>🌿</div>
   </div>
 
-
   <!-- LANDING -->
   <section class="page active" id="landing">
     <div class="hero">
 
       <div class="visual">
         <div class="map-line"></div>
+
         <div class="pin p1"><span>☕</span></div>
         <div class="pin p2"><span>🌿</span></div>
         <div class="pin p3"><span>🎨</span></div>
         <div class="pin p4"><span>🧸</span></div>
         <div class="pin p5"><span>🏘️</span></div>
+
         <div class="center-pin">📍</div>
       </div>
 
@@ -673,10 +594,8 @@
       <button class="primary" onclick="startNewFamily()">
         새로 여행 취향 설정하기 →
       </button>
-
     </div>
   </section>
-
 
   <!-- PEOPLE -->
   <section class="page" id="people">
@@ -684,7 +603,7 @@
     <div class="top">
       <div class="eyebrow">STEP 1</div>
       <h2>오늘은 누구와 떠나세요?</h2>
-      <p>함께 가는 사람을 고르고 부르기 편한 이름을 적어주세요.</p>
+      <p>함께 가는 사람을 고르고, 부르기 편한 이름을 적어주세요.</p>
     </div>
 
     <div class="progress">
@@ -697,9 +616,7 @@
       <button class="secondary" onclick="go('landing')">이전</button>
       <button class="primary" onclick="buildPreferences()">취향 고르기</button>
     </div>
-
   </section>
-
 
   <!-- PREFERENCES -->
   <section class="page" id="preferences">
@@ -719,7 +636,7 @@
     <div class="save-family-box">
       <strong>💾 다음에도 이 가족 그대로 쓸까요?</strong>
       <div class="small">
-        이름과 취향을 이 브라우저에 저장해두면 다음에는 다시 입력하지 않아도 돼요.
+        이름과 취향을 이 브라우저에 저장해두면 다음엔 다시 입력하지 않아도 돼요.
       </div>
       <br>
       <button class="secondary" onclick="saveFamily()">
@@ -731,9 +648,7 @@
       <button class="secondary" onclick="go('people')">이전</button>
       <button class="primary" onclick="go('conditions')">여행 조건 정하기</button>
     </div>
-
   </section>
-
 
   <!-- CONDITIONS -->
   <section class="page" id="conditions">
@@ -741,7 +656,7 @@
     <div class="top">
       <div class="eyebrow">STEP 3</div>
       <h2>오늘의 조건은 어떤가요?</h2>
-      <p>오늘 움직일 수 있는 범위와 여행 스타일을 알려주세요.</p>
+      <p>이제 오늘 여행에 필요한 조건만 골라주세요.</p>
     </div>
 
     <div class="progress">
@@ -751,22 +666,22 @@
     <div class="card">
 
       <div class="field">
-        <label>📍 어디서 출발하세요?</label>
-        <input id="startArea" placeholder="예: 부천시, 안양시, 안산시">
+        <label>📍 출발지역</label>
+        <input id="startArea" placeholder="예: 부천">
       </div>
 
       <div class="field">
-        <label>🚗 어느 정도까지 이동할까요?</label>
+        <label>🚗 최대 이동시간</label>
         <select id="driveTime">
-          <option value="5000">가까운 곳 위주</option>
-          <option value="10000">30~40분 정도</option>
-          <option value="15000" selected>1시간 안팎</option>
-          <option value="20000">조금 멀어도 괜찮아요</option>
+          <option value="30">30분 이내</option>
+          <option value="60">1시간 이내</option>
+          <option value="90" selected>1시간 30분 이내</option>
+          <option value="120">2시간 이내</option>
         </select>
       </div>
 
       <div class="field">
-        <label>☔ 실내가 중요한가요?</label>
+        <label>☔ 오늘 실내가 중요한가요?</label>
         <div class="segmented" data-group="indoor">
           <button data-value="yes">실내 위주</button>
           <button data-value="no" class="selected">상관없어요</button>
@@ -793,44 +708,22 @@
 
     <div class="actions">
       <button class="secondary" onclick="go('preferences')">이전</button>
-      <button class="primary" onclick="findAnonhanTrip()">안온한 여행 찾기 ✨</button>
-    </div>
-
-  </section>
-
-
-  <!-- LOADING -->
-  <section class="page" id="loading">
-    <div class="loading">
-      <div class="spinner"></div>
-
-      <h2>우리 가족의 중간점을 찾고 있어요.</h2>
-
-      <p class="hero-copy">
-        각자의 취향과 싫어하는 것을 비교하고<br>
-        실제 갈 수 있는 장소를 찾는 중이에요. 🌿
-      </p>
+      <button class="primary" onclick="makeResults()">안온한 여행 찾기 ✨</button>
     </div>
   </section>
 
-
-  <!-- RESULT -->
+  <!-- RESULTS -->
   <section class="page" id="result">
 
     <div class="top">
       <div class="eyebrow">오늘의 안온한 여행</div>
-
-      <h2>
-        우리 가족에게<br>
-        잘 맞는 지역을 골랐어요.
-      </h2>
-
-      <p id="resultSummary"></p>
+      <h2>우리 가족에겐<br>이 세 곳이 잘 맞아요.</h2>
+      <p>
+        한 사람만 신나는 곳보다 모두가 하나씩 좋아할 만한 곳을 골랐어요.
+      </p>
     </div>
 
     <div id="resultCards"></div>
-
-    <div id="resultError"></div>
 
     <div class="result-actions">
       <button class="primary" onclick="shareResult()">가족에게 공유하기 💌</button>
@@ -848,9 +741,7 @@
       </div>
     </div>
 
-    <button class="secondary" onclick="go('conditions')">
-      다른 조건으로 다시 찾아보기
-    </button>
+    <button class="secondary" onclick="restart()">다른 조건으로 다시 찾아보기</button>
 
     <div class="footer-note">
       안온한 여행은 가족여행에서 생기는 작은 불편함에서 시작했습니다.<br>
@@ -858,15 +749,13 @@
       <br><br>
       © 안온한 조미언니
     </div>
-
   </section>
 
 </div>
 
-
 <script>
 
-const STORAGE_KEY = "anonhan-family-v4";
+const STORAGE_KEY = "anonhan-family-v1";
 
 const state = {
   people: [],
@@ -875,11 +764,8 @@ const state = {
     indoor:"no",
     walk:"low",
     duration:"day"
-  },
-  start:null,
-  results:[]
+  }
 };
-
 
 const peopleDefaults = [
   {key:"me",label:"나",emoji:"🙋🏻‍♀️",defaultName:"나"},
@@ -890,13 +776,11 @@ const peopleDefaults = [
   {key:"etc",label:"기타",emoji:"➕",defaultName:"동행자"}
 ];
 
-
 const flexiblePrefs = [
   "😊 다 좋아요",
   "🙆 가족이 가는 곳이면 좋아요",
   "🎯 특별한 선호 없음"
 ];
-
 
 const likes = [
   "🌿 자연경관",
@@ -951,7 +835,6 @@ const likes = [
   "🎪 축제·행사"
 ];
 
-
 const dislikes = [
   "⛰️ 높은 곳",
   "🌉 출렁다리",
@@ -989,98 +872,82 @@ const dislikes = [
   "🌲 자연만 보는 곳"
 ];
 
+const destinations = [
+  {
+    name:"김포",
+    tags:[
+      "🌿 자연경관",
+      "☕ 카페",
+      "🏡 대형카페",
+      "🛍️ 소품샵",
+      "📷 사진찍기",
+      "🧸 체험"
+    ],
+    indoor:true,
+    lowWalk:true,
+    summary:"자연과 카페, 구경거리를 한 지역 안에서 적당히 섞기 좋아요.",
+    route:["실내 구경","점심","체험","카페","짧은 산책"],
+    rainy:["실내 구경","점심","대형카페","쇼핑"],
+    warning:"높은 곳을 싫어하는 가족이 있다면 전망대는 제외하는 게 좋아요."
+  },
 
-/*
-취향 버튼 → 실제 카카오 검색 키워드
-*/
-const searchMap = {
-  "🌿 자연경관":["공원","수목원","호수공원"],
-  "🏞️ 공원":["공원"],
-  "🌳 수목원":["수목원","식물원"],
-  "🌊 바다":["해변","바다"],
-  "🏖️ 계곡":["계곡"],
-  "🌅 노을":["노을 명소","공원"],
-  "🌃 야경":["야경 명소"],
+  {
+    name:"파주",
+    tags:[
+      "🌿 자연경관",
+      "☕ 카페",
+      "🏡 대형카페",
+      "🎨 전시",
+      "🛍️ 소품샵",
+      "📚 서점",
+      "🏘️ 아기자기한 거리"
+    ],
+    indoor:true,
+    lowWalk:false,
+    summary:"전시·책·카페와 자연을 함께 즐기기 좋아요.",
+    route:["전시","점심","소품샵","카페","드라이브"],
+    rainy:["전시","서점","점심","대형카페"],
+    warning:"장소 사이 이동 거리가 길 수 있어 코스를 너무 많이 넣지 않는 편이 좋아요."
+  },
 
-  "🍜 맛집":["맛집"],
-  "☕ 카페":["카페"],
-  "🏡 대형카페":["대형카페","베이커리카페"],
-
-  "🛍️ 소품샵":["소품샵"],
-  "🧺 플리마켓":["플리마켓"],
-  "🧸 빈티지샵":["빈티지샵"],
-  "🛒 쇼핑":["쇼핑몰"],
-  "🏬 쇼핑몰":["쇼핑몰"],
-  "🏷️ 아울렛":["아울렛"],
-  "🛍️ 전통시장":["전통시장"],
-  "📚 서점":["서점"],
-
-  "🎨 전시":["전시관"],
-  "🖼️ 미술관":["미술관"],
-  "🏛️ 박물관":["박물관"],
-  "🏯 역사·문화":["문화재","역사관"],
-  "🎭 공연":["공연장"],
-
-  "🧸 체험":["체험관"],
-  "🎨 공방":["공방"],
-  "🐑 체험농장":["체험농장"],
-  "🐶 동물":["동물원","동물체험"],
-  "🎠 놀이공원":["놀이공원"],
-  "🛝 놀이터":["놀이터"],
-  "🧒 키즈공간":["키즈카페","어린이체험"],
-
-  "🚗 드라이브":["드라이브 명소"],
-  "📷 사진찍기":["사진 명소"],
-  "🎢 액티비티":["레저","체험"],
-  "🚲 자전거":["자전거공원"],
-  "🚶 산책":["산책로","공원"],
-  "🧺 피크닉":["피크닉 공원"],
-  "♨️ 온천·스파":["스파","온천"],
-
-  "🌱 조용한 곳":["정원","수목원"],
-  "💆 쉬는 여행":["카페","공원"],
-  "🎉 볼거리 많은 곳":["문화거리","관광지"],
-  "🧭 새로운 곳":["관광지"],
-  "🏘️ 아기자기한 거리":["문화거리","벽화마을"],
-  "🌆 예쁜 동네 구경":["문화거리"],
-  "🎪 축제·행사":["축제"]
-};
-
-
-const indoorKeywords = [
-  "카페","미술관","박물관","전시관",
-  "체험관","쇼핑몰","아울렛",
-  "서점","공방","키즈카페",
-  "공연장","스파","온천"
+  {
+    name:"인천",
+    tags:[
+      "🌊 바다",
+      "☕ 카페",
+      "🎨 전시",
+      "🛍️ 소품샵",
+      "📷 사진찍기",
+      "🌿 자연경관",
+      "🧸 체험",
+      "🏘️ 아기자기한 거리"
+    ],
+    indoor:true,
+    lowWalk:true,
+    summary:"먹거리와 구경거리, 실내 공간과 바다를 함께 섞기 좋아요.",
+    route:["실내 구경","점심","동네 구경","카페","바다 드라이브"],
+    rainy:["실내 전시","점심","쇼핑","카페"],
+    warning:"주말에는 사람이 붐비는 지역을 피해 동선을 잡는 게 좋아요."
+  }
 ];
-
-
-const riskyWords = [
-  "전망대","스카이워크","출렁다리",
-  "흔들다리","케이블카","타워"
-];
-
 
 function go(id){
   document.querySelectorAll(".page")
     .forEach(p=>p.classList.remove("active"));
 
-  document.getElementById(id).classList.add("active");
+  document.getElementById(id)
+    .classList.add("active");
 
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
-
 function renderPeople(){
-
-  const box=document.getElementById("peopleList");
-
+  const box = document.getElementById("peopleList");
   box.innerHTML="";
 
   peopleDefaults.forEach(person=>{
 
     const card=document.createElement("div");
-
     card.className="card";
 
     card.innerHTML=`
@@ -1090,17 +957,12 @@ function renderPeople(){
       </button>
 
       <div class="name-box">
-
-        <label>
-          이름 또는 부를 이름
-        </label>
-
+        <label>이름 또는 부를 이름</label>
         <input
           data-name="${person.key}"
           value="${person.defaultName}"
-          placeholder="예: 찬이, 준이, 남편, 엄마아빠"
+          placeholder="예: 민준, 남편, 엄마아빠"
         >
-
       </div>
     `;
 
@@ -1108,61 +970,49 @@ function renderPeople(){
     const nameBox=card.querySelector(".name-box");
 
     choice.onclick=()=>{
-
       choice.classList.toggle("selected");
 
       nameBox.style.display =
         choice.classList.contains("selected")
         ? "block"
         : "none";
-
     };
 
     box.appendChild(card);
-
   });
-
 }
-
 
 function startNewFamily(){
-
   state.people=[];
   state.prefs={};
-
   renderPeople();
-
   go("people");
 }
-
 
 function buildPreferences(){
 
   state.people=[];
 
-  document.querySelectorAll("[data-key]")
-    .forEach(choice=>{
+  document.querySelectorAll("[data-key]").forEach(choice=>{
 
-      if(choice.classList.contains("selected")){
+    if(choice.classList.contains("selected")){
 
-        const key=choice.dataset.key;
+      const key=choice.dataset.key;
 
-        const input=
-          document.querySelector(`[data-name="${key}"]`);
+      const input=
+        document.querySelector(`[data-name="${key}"]`);
 
-        state.people.push({
-          key,
-          name:input.value.trim() || "동행자"
-        });
+      state.people.push({
+        key,
+        name:input.value.trim() || "동행자"
+      });
 
-      }
+    }
 
-    });
+  });
 
   if(!state.people.length){
-
     alert("함께 가는 사람을 한 명 이상 골라주세요 😊");
-
     return;
   }
 
@@ -1171,10 +1021,9 @@ function buildPreferences(){
   go("preferences");
 }
 
-
 function renderPreferences(){
 
-  const container=
+  const container =
     document.getElementById("preferenceContainer");
 
   container.innerHTML="";
@@ -1205,35 +1054,32 @@ function renderPreferences(){
       </div>
 
       <div class="section-desc">
-        어디든 괜찮은 편이면 하나만 골라도 좋아요.
+        따로 원하는 게 많지 않다면 하나만 골라도 괜찮아요.
       </div>
 
       <div class="tags flexible"></div>
 
-
       <div class="section-title">
-        놀러갈 때 좋아하는 것 💛
+        좋아하는 것 💛
       </div>
 
       <div class="section-desc">
-        여러 개 선택할수록 취향을 더 자세히 반영할 수 있어요.
+        놀러갈 때 좋아하는 스타일을 여러 개 골라주세요.
       </div>
 
       <div class="tags likes"></div>
-
 
       <div class="section-title">
         피하고 싶은 것 🙅
       </div>
 
       <div class="section-desc">
-        싫거나 부담되는 것은 모두 골라주세요.
+        싫거나 부담되는 것은 모두 선택해주세요.
       </div>
 
       <div class="tags dislikes"></div>
 
     `;
-
 
     const flexibleBox=
       card.querySelector(".flexible");
@@ -1255,26 +1101,21 @@ function renderPreferences(){
         flexibleBox
           .querySelectorAll(".tag")
           .forEach(x=>{
-
             if(x!==b){
               x.classList.remove("selected");
             }
-
           });
 
         b.classList.toggle("selected");
 
-        pref.flexible=
+        pref.flexible =
           b.classList.contains("selected")
           ? item
           : "";
-
       };
 
       flexibleBox.appendChild(b);
-
     });
-
 
     const likeBox=
       card.querySelector(".likes");
@@ -1295,15 +1136,12 @@ function renderPreferences(){
 
         b.classList.toggle("selected");
 
-        pref.likes=
+        pref.likes =
           toggleValue(pref.likes,item);
-
       };
 
       likeBox.appendChild(b);
-
     });
-
 
     const dislikeBox=
       card.querySelector(".dislikes");
@@ -1324,22 +1162,17 @@ function renderPreferences(){
 
         b.classList.toggle("selected");
 
-        pref.dislikes=
+        pref.dislikes =
           toggleValue(pref.dislikes,item);
-
       };
 
       dislikeBox.appendChild(b);
-
     });
-
 
     container.appendChild(card);
 
   });
-
 }
-
 
 function toggleValue(arr,value){
 
@@ -1349,7 +1182,6 @@ function toggleValue(arr,value){
 
 }
 
-
 function saveFamily(){
 
   if(!state.people.length){
@@ -1357,21 +1189,20 @@ function saveFamily(){
     return;
   }
 
+  const saveData={
+    people:state.people,
+    prefs:state.prefs
+  };
+
   localStorage.setItem(
     STORAGE_KEY,
-    JSON.stringify({
-      people:state.people,
-      prefs:state.prefs
-    })
+    JSON.stringify(saveData)
   );
 
-  alert(
-    "우리 가족을 저장했어요 🌿\n다음에는 바로 불러올 수 있어요."
-  );
+  alert("우리 가족을 저장했어요 🌿\n다음에는 바로 불러올 수 있어요.");
 
   renderSavedFamilyLanding();
 }
-
 
 function getSavedFamily(){
 
@@ -1384,13 +1215,11 @@ function getSavedFamily(){
 
   try{
     return JSON.parse(raw);
-  }
-  catch(e){
+  }catch(e){
     return null;
   }
 
 }
-
 
 function loadSavedFamily(){
 
@@ -1398,17 +1227,20 @@ function loadSavedFamily(){
     getSavedFamily();
 
   if(!saved){
+    alert("저장된 가족 정보가 없어요.");
     return;
   }
 
-  state.people=saved.people || [];
-  state.prefs=saved.prefs || {};
+  state.people=
+    saved.people || [];
+
+  state.prefs=
+    saved.prefs || {};
 
   renderPreferences();
 
   go("conditions");
 }
-
 
 function editSavedFamily(){
 
@@ -1419,8 +1251,11 @@ function editSavedFamily(){
     return;
   }
 
-  state.people=saved.people || [];
-  state.prefs=saved.prefs || {};
+  state.people =
+    saved.people || [];
+
+  state.prefs =
+    saved.prefs || {};
 
   renderPeople();
 
@@ -1433,13 +1268,12 @@ function editSavedFamily(){
       document.querySelector(`[data-name="${person.key}"]`);
 
     if(choice){
-
       choice.classList.add("selected");
 
-      choice.parentElement
-        .querySelector(".name-box")
-        .style.display="block";
+      const nameBox=
+        choice.parentElement.querySelector(".name-box");
 
+      nameBox.style.display="block";
     }
 
     if(input){
@@ -1451,20 +1285,23 @@ function editSavedFamily(){
   go("people");
 }
 
-
 function deleteSavedFamily(){
 
-  if(
-    !confirm("저장된 가족 정보를 지울까요?")
-  ){
+  const ok =
+    confirm(
+      "저장된 가족 정보를 지울까요?"
+    );
+
+  if(!ok){
     return;
   }
 
   localStorage.removeItem(STORAGE_KEY);
 
   renderSavedFamilyLanding();
-}
 
+  alert("저장된 가족 정보를 지웠어요.");
+}
 
 function renderSavedFamilyLanding(){
 
@@ -1474,7 +1311,7 @@ function renderSavedFamilyLanding(){
   const saved=
     getSavedFamily();
 
-  if(!saved?.people?.length){
+  if(!saved || !saved.people?.length){
 
     box.innerHTML="";
     return;
@@ -1530,10 +1367,6 @@ function renderSavedFamilyLanding(){
 
 }
 
-
-/*
-조건 버튼
-*/
 document
   .querySelectorAll(".segmented")
   .forEach(group=>{
@@ -1550,7 +1383,8 @@ document
               b.classList.remove("selected")
             );
 
-          button.classList.add("selected");
+          button
+            .classList.add("selected");
 
           state.conditions[
             group.dataset.group
@@ -1563,178 +1397,9 @@ document
 
   });
 
-
-async function apiSearch(params){
-
-  const query=
-    new URLSearchParams(params);
-
-  const res=
-    await fetch(
-      "/.netlify/functions/kakao-search?" +
-      query.toString()
-    );
-
-  const data=
-    await res.json();
-
-  if(!res.ok){
-    throw new Error(
-      data.error ||
-      "장소 검색 중 오류가 발생했습니다."
-    );
-  }
-
-  return data;
-}
-
-
-function collectSearchKeywords(){
-
-  const counts={};
-
-  Object.values(state.prefs)
-    .forEach(pref=>{
-
-      (pref.likes || [])
-        .forEach(like=>{
-
-          (searchMap[like] || [])
-            .forEach(keyword=>{
-
-              counts[keyword] =
-                (counts[keyword] || 0) + 1;
-
-            });
-
-        });
-
-    });
-
-
-  let keywords=
-    Object.entries(counts)
-      .sort((a,b)=>b[1]-a[1])
-      .map(x=>x[0]);
-
-
-  /*
-  선택이 적을 때 기본 후보 추가
-  */
-  const defaults=[
-    "카페",
-    "공원",
-    "전시관",
-    "체험관",
-    "박물관",
-    "관광지"
-  ];
-
-  defaults.forEach(x=>{
-
-    if(!keywords.includes(x)){
-      keywords.push(x);
-    }
-
-  });
-
-
-  /*
-  API 호출 너무 많아지지 않게 7개까지만
-  */
-  return keywords.slice(0,7);
-
-}
-
-
-function hasHeightConcern(){
-
-  return Object.values(state.prefs)
-    .some(pref=>
-      pref.dislikes.some(x=>
-        x.includes("높은 곳") ||
-        x.includes("출렁다리") ||
-        x.includes("전망대") ||
-        x.includes("흔들리는 곳")
-      )
-    );
-
-}
-
-
-function hasWalkConcern(){
-
-  return Object.values(state.prefs)
-    .some(pref=>
-      pref.dislikes.some(x=>
-        x.includes("많이 걷기") ||
-        x.includes("오르막") ||
-        x.includes("계단") ||
-        x.includes("등산")
-      )
-    );
-
-}
-
-
-function isRiskyPlace(place){
-
-  if(!hasHeightConcern()){
-    return false;
-  }
-
-  const text=
-    `${place.name} ${place.category}`;
-
-  return riskyWords.some(word=>
-    text.includes(word)
-  );
-
-}
-
-
-function cleanRegion(address){
-
-  if(!address){
-    return "주변 지역";
-  }
-
-  const parts=
-    address.split(" ")
-      .filter(Boolean);
-
-  /*
-  경기 부천시 원미구...
-  서울 강서구...
-  인천 계양구...
-  */
-
-  if(parts[0]==="서울"){
-    return parts.slice(0,2).join(" ");
-  }
-
-  if(parts[0]==="인천"){
-    return parts.slice(0,2).join(" ");
-  }
-
-  if(parts[0]==="경기"){
-    return parts.slice(0,3).join(" ");
-  }
-
-  return parts.slice(0,2).join(" ");
-
-}
-
-
-function scoreRegion(region){
+function calculate(destination){
 
   let score=55;
-
-  const tags=
-    new Set(
-      region.places.map(x=>x.searchKeyword)
-    );
-
 
   Object.values(state.prefs)
     .forEach(pref=>{
@@ -1745,798 +1410,206 @@ function scoreRegion(region){
 
       pref.likes.forEach(like=>{
 
-        const keywords=
-          searchMap[like] || [];
-
-        if(
-          keywords.some(k=>
-            tags.has(k)
-          )
-        ){
+        if(destination.tags.includes(like)){
           score+=5;
         }
 
       });
 
+      pref.dislikes.forEach(dislike=>{
+
+        if(
+          dislike.includes("많이 걷기") &&
+          !destination.lowWalk
+        ){
+          score-=18;
+        }
+
+        if(
+          dislike.includes("야외") &&
+          !destination.indoor
+        ){
+          score-=14;
+        }
+
+      });
+
     });
 
-
-  /*
-  장소 종류가 다양할수록 가점
-  */
-  score +=
-    Math.min(
-      new Set(
-        region.places.map(x=>x.searchKeyword)
-      ).size * 3,
-      15
-    );
-
-
   if(
-    state.conditions.indoor==="yes"
+    state.conditions.indoor==="yes" &&
+    !destination.indoor
   ){
-
-    const indoorCount=
-      region.places
-        .filter(place=>
-          indoorKeywords.some(k=>
-            place.searchKeyword.includes(k)
-          )
-        )
-        .length;
-
-    score +=
-      Math.min(indoorCount*2,10);
-
+    score-=18;
   }
 
+  if(
+    state.conditions.walk==="low" &&
+    !destination.lowWalk
+  ){
+    score-=10;
+  }
 
   return Math.min(
     98,
-    Math.max(45,score)
+    Math.max(40,score)
   );
 
 }
 
-
-function chooseRepresentativePlaces(region){
-
-  const unique=[];
-
-  const usedCategories=
-    new Set();
-
-
-  /*
-  같은 카테고리만 3개 나오지 않게
-  */
-  region.places.forEach(place=>{
-
-    if(unique.length>=5){
-      return;
-    }
-
-    if(isRiskyPlace(place)){
-      return;
-    }
-
-    if(
-      !usedCategories.has(place.searchKeyword)
-    ){
-
-      unique.push(place);
-
-      usedCategories.add(
-        place.searchKeyword
-      );
-
-    }
-
-  });
-
-
-  /*
-  그래도 부족하면 다른 장소 추가
-  */
-  region.places.forEach(place=>{
-
-    if(unique.length>=5){
-      return;
-    }
-
-    if(
-      !unique.some(x=>x.id===place.id) &&
-      !isRiskyPlace(place)
-    ){
-      unique.push(place);
-    }
-
-  });
-
-
-  return unique.slice(
-    0,
-    state.conditions.duration==="half"
-      ? 3
-      : 5
-  );
-
-}
-
-
-function buildReasonForPerson(person,region){
-
-  const pref=
-    state.prefs[person.key];
-
-  if(!pref){
-    return "무리 없는 동선";
-  }
-
-  if(pref.flexible){
-    return pref.flexible;
-  }
-
-
-  const regionKeywords=
-    new Set(
-      region.places.map(x=>x.searchKeyword)
-    );
-
-
-  const matched=
-    pref.likes.filter(like=>{
-
-      return (searchMap[like] || [])
-        .some(k=>
-          regionKeywords.has(k)
-        );
-
-    }).slice(0,3);
-
-
-  if(matched.length){
-    return matched.join(" · ");
-  }
-
-  return "다른 가족과 함께 즐기기 좋은 조합";
-}
-
-
-function buildWarning(){
-
-  const warnings=[];
-
-
-  if(hasHeightConcern()){
-
-    warnings.push(
-      "높은 곳·전망대·출렁다리 계열 장소는 추천에서 최대한 제외했어요."
-    );
-
-  }
-
-
-  if(
-    hasWalkConcern() ||
-    state.conditions.walk==="low"
-  ){
-
-    warnings.push(
-      "걷기 부담을 줄이도록 장소 수를 너무 많이 넣지 않는 것을 추천해요."
-    );
-
-  }
-
-
-  const crowdConcern=
-    Object.values(state.prefs)
-      .some(pref=>
-        pref.dislikes.some(x=>
-          x.includes("사람 많은 곳") ||
-          x.includes("긴 대기")
-        )
-      );
-
-
-  if(crowdConcern){
-
-    warnings.push(
-      "주말에는 인기 장소를 오전에 방문하면 대기 부담을 줄일 수 있어요."
-    );
-
-  }
-
-
-  return warnings.length
-    ? warnings.join(" ")
-    : "가족 컨디션에 따라 장소 수를 한두 곳 줄여도 좋아요.";
-
-}
-
-
-async function findAnonhanTrip(){
-
-  const startArea=
-    document
-      .getElementById("startArea")
-      .value
-      .trim();
-
-
-  if(!startArea){
-
-    alert(
-      "출발지역을 입력해주세요.\n예: 부천시"
-    );
-
-    return;
-  }
-
-
-  go("loading");
-
-
-  try{
-
-    /*
-    1. 출발지역 좌표
-    */
-    const addressData=
-      await apiSearch({
-        type:"address",
-        query:startArea
-      });
-
-
-    if(!addressData.found){
-
-      throw new Error(
-        "출발지역을 찾지 못했어요. '부천시', '안양시'처럼 다시 입력해주세요."
-      );
-
-    }
-
-
-    state.start={
-      name:addressData.address,
-      x:addressData.x,
-      y:addressData.y
-    };
-
-
-    /*
-    2. 취향에서 검색 키워드 생성
-    */
-    const keywords=
-      collectSearchKeywords();
-
-
-    const radius=
-      document
-        .getElementById("driveTime")
-        .value;
-
-
-    /*
-    3. 실제 장소 검색
-    */
-    const searchResults=
-      await Promise.all(
-        keywords.map(async keyword=>{
-
-          try{
-
-            const result=
-              await apiSearch({
-                type:"keyword",
-                query:keyword,
-                x:state.start.x,
-                y:state.start.y,
-                radius
-              });
-
-
-            return (result.places || [])
-              .map(place=>({
-                ...place,
-                searchKeyword:keyword
-              }));
-
-          }
-
-          catch(e){
-
-            return [];
-
-          }
-
-        })
-      );
-
-
-    let allPlaces=
-      searchResults.flat();
-
-
-    /*
-    중복 제거
-    */
-    const placeMap=
-      new Map();
-
-    allPlaces.forEach(place=>{
-
-      if(!placeMap.has(place.id)){
-        placeMap.set(
-          place.id,
-          place
-        );
-      }
-
-    });
-
-    allPlaces=
-      Array.from(
-        placeMap.values()
-      );
-
-
-    /*
-    위험 장소 제외
-    */
-    allPlaces=
-      allPlaces.filter(place=>
-        !isRiskyPlace(place)
-      );
-
-
-    if(!allPlaces.length){
-
-      throw new Error(
-        "조건에 맞는 장소를 충분히 찾지 못했어요. 이동 범위를 조금 넓혀보세요."
-      );
-
-    }
-
-
-    /*
-    4. 지역별 그룹
-    */
-    const regions={};
-
-    allPlaces.forEach(place=>{
-
-      const regionName=
-        cleanRegion(place.address);
-
-      regions[regionName] ||= {
-        name:regionName,
-        places:[]
-      };
-
-      regions[regionName]
-        .places
-        .push(place);
-
-    });
-
-
-    /*
-    5. 점수 계산
-    */
-    let ranked=
-      Object.values(regions)
-        .map(region=>({
-
-          ...region,
-
-          score:
-            scoreRegion(region)
-
-        }))
-        .sort((a,b)=>
-          b.score-a.score ||
-          b.places.length-a.places.length
-        );
-
-
-    /*
-    장소가 너무 적은 지역 제외
-    */
-    const enough=
-      ranked.filter(x=>
-        x.places.length>=2
-      );
-
-
-    if(enough.length>=3){
-      ranked=enough;
-    }
-
-
-    state.results=
-      ranked.slice(0,3);
-
-
-    renderResults();
-
-    go("result");
-
-  }
-
-  catch(error){
-
-    document
-      .getElementById("resultCards")
-      .innerHTML="";
-
-    document
-      .getElementById("resultError")
-      .innerHTML=`
-
-        <div class="error-box">
-
-          <strong>
-            😥 추천을 만드는 중 문제가 생겼어요.
-          </strong>
-
-          <br><br>
-
-          ${escapeHtml(error.message)}
-
-          <br><br>
-
-          <button
-            class="secondary"
-            onclick="go('conditions')"
-          >
-            조건 다시 입력하기
-          </button>
-
-        </div>
-
-      `;
-
-    go("result");
-
-  }
-
-}
-
-
-function renderResults(){
+function makeResults(){
+
+  const ranked=
+    destinations
+      .map(d=>({
+        ...d,
+        score:calculate(d)
+      }))
+      .sort((a,b)=>b.score-a.score)
+      .slice(0,3);
 
   const box=
     document.getElementById("resultCards");
 
-  const error=
-    document.getElementById("resultError");
-
   box.innerHTML="";
-  error.innerHTML="";
 
+  ranked.forEach((d,index)=>{
 
-  document
-    .getElementById("resultSummary")
-    .textContent=
-      `${state.start.name}에서 출발해 가족 취향을 함께 반영했어요.`;
+    const reasons=
+      state.people
+        .map(person=>{
 
+          const pref=
+            state.prefs[person.key];
 
-  state.results.forEach(
-    (region,index)=>{
-
-      const representatives=
-        chooseRepresentativePlaces(region);
-
-
-      const reasons=
-        state.people
-          .map(person=>`
-
-            <div class="reason">
-
-              <span>
-                ${
-                  person.key.includes("child")
-                    ? "🧒"
-                    : person.key==="parents"
-                    ? "👵"
-                    : person.key==="me"
-                    ? "🙋‍♀️"
-                    : "🙂"
-                }
-              </span>
-
-              <span>
-
-                <b>
-                  ${escapeHtml(person.name)}
-                </b>
-
-                ·
-
-                ${
-                  escapeHtml(
-                    buildReasonForPerson(
-                      person,
-                      region
-                    )
-                  )
-                }
-
-              </span>
-
-            </div>
-
-          `)
-          .join("");
-
-
-      const spotHtml=
-        representatives
-          .map(place=>{
-
-            const google=
-              "https://www.google.com/maps/search/?api=1&query=" +
-              encodeURIComponent(
-                `${place.name} ${place.address}`
-              );
-
+          if(pref?.flexible){
 
             return `
-
-              <div class="spot">
-
-                <div class="spot-head">
-
-                  <div>
-
-                    <div class="spot-name">
-                      ${escapeHtml(place.name)}
-                    </div>
-
-                    <div class="spot-category">
-                      ${escapeHtml(place.searchKeyword)}
-                    </div>
-
-                  </div>
-
-                  ${
-                    place.distance
-                    ? `<div class="small">
-                        ${(place.distance/1000).toFixed(1)}km
-                       </div>`
-                    : ""
-                  }
-
-                </div>
-
-
-                <div class="spot-address">
-                  ${escapeHtml(place.address || "")}
-                </div>
-
-
-                <div class="spot-links">
-
-                  ${
-                    place.kakaoUrl
-                    ? `
-                      <a
-                        class="spot-link"
-                        href="${place.kakaoUrl}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        카카오맵 보기
-                      </a>
-                    `
-                    : ""
-                  }
-
-
-                  <a
-                    class="spot-link"
-                    href="${google}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    구글지도 보기
-                  </a>
-
-                </div>
-
+              <div class="reason">
+                <span>🙆</span>
+                <span>
+                  <b>${person.name}</b>
+                  · ${pref.flexible}
+                </span>
               </div>
-
             `;
 
-          })
-          .join("");
-
-
-      const route=
-        representatives
-          .map(x=>
-            x.name
-          );
-
-
-      const card=
-        document.createElement("div");
-
-      card.className="result-card";
-
-
-      card.innerHTML=`
-
-        <div class="rank">
-
-          <div>
-
-            <div class="rank-number">
-              0${index+1}
-            </div>
-
-            <h3>
-              ${escapeHtml(region.name)}
-            </h3>
-
-          </div>
-
-
-          <div class="score">
-            가족 적합도 ${region.score}%
-          </div>
-
-        </div>
-
-
-        <div class="why">
-
-          이 지역에서는
-          ${
-            [...new Set(
-              representatives.map(x=>
-                x.searchKeyword
-              )
-            )]
-            .slice(0,4)
-            .join(" · ")
           }
-          을 한 코스에 섞어볼 수 있어요.
 
-        </div>
+          const match=
+            pref?.likes
+              ?.filter(x=>
+                d.tags.includes(x)
+              )
+              .slice(0,3)
+            || [];
 
-
-        ${reasons}
-
-
-        <div class="warning">
-
-          ⚠️ ${escapeHtml(buildWarning())}
-
-        </div>
-
-
-        <div class="route">
-
-          <div class="route-title">
-            📍 대표 추천지
-          </div>
-
-          <div class="spots">
-            ${spotHtml}
-          </div>
-
-        </div>
-
-
-        <div class="route">
-
-          <div class="route-title">
-            오늘의 추천 동선
-          </div>
-
-          <div class="route-line">
-
-            ${route.map((r,i)=>`
-
-              <span class="route-stop">
-                ${escapeHtml(r)}
-              </span>
-
-              ${
-                i<route.length-1
-                ? "→"
-                : ""
-              }
-
-            `).join("")}
-
-          </div>
-
-        </div>
-
-
-        ${
-          state.conditions.indoor==="yes"
-          ? `
-
-            <div class="route">
-
-              <div class="route-title">
-                ☔ 실내 위주로 간다면
-              </div>
-
-              <div class="route-line">
-
+          return `
+            <div class="reason">
+              <span>🙂</span>
+              <span>
+                <b>${person.name}</b>
+                ·
                 ${
-                  representatives
-                    .filter(place=>
-                      indoorKeywords
-                        .some(k=>
-                          place.searchKeyword
-                            .includes(k)
-                        )
-                    )
-                    .slice(0,3)
-                    .map((r,i,arr)=>`
-
-                      <span class="route-stop">
-                        ${escapeHtml(r.name)}
-                      </span>
-
-                      ${
-                        i<arr.length-1
-                        ? "→"
-                        : ""
-                      }
-
-                    `)
-                    .join("")
-                  ||
-                  `<span class="small">
-                    실내 장소를 충분히 찾지 못했어요.
-                   </span>`
+                  match.length
+                    ? match.join(" · ")
+                    : "무리 없는 동선"
                 }
-
-              </div>
-
+              </span>
             </div>
+          `;
 
-          `
-          : ""
-        }
+        })
+        .join("");
 
-      `;
+    const card=
+      document.createElement("div");
 
+    card.className="result-card";
 
-      box.appendChild(card);
+    card.innerHTML=`
 
-    });
+      <div class="rank">
 
+        <div>
+
+          <div class="rank-number">
+            0${index+1}
+          </div>
+
+          <h3>
+            ${d.name}
+          </h3>
+
+        </div>
+
+        <div class="score">
+          가족 적합도 ${d.score}%
+        </div>
+
+      </div>
+
+      <div class="why">
+        ${d.summary}
+      </div>
+
+      ${reasons}
+
+      <div class="warning">
+        ⚠️ ${d.warning}
+      </div>
+
+      <div class="route">
+
+        <div class="route-title">
+          오늘의 추천 동선
+        </div>
+
+        <div class="route-line">
+
+          ${d.route.map((r,i)=>`
+            <span class="route-stop">
+              ${r}
+            </span>
+            ${i < d.route.length-1 ? "→" : ""}
+          `).join("")}
+
+        </div>
+
+      </div>
+
+      <div class="route">
+
+        <div class="route-title">
+          ☔ 비가 온다면
+        </div>
+
+        <div class="route-line">
+
+          ${d.rainy.map((r,i)=>`
+            <span class="route-stop">
+              ${r}
+            </span>
+            ${i < d.rainy.length-1 ? "→" : ""}
+          `).join("")}
+
+        </div>
+
+      </div>
+
+    `;
+
+    box.appendChild(card);
+
+  });
+
+  go("result");
 }
-
-
-function escapeHtml(value){
-
-  return String(value || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
 
 async function shareResult(){
 
-  const text=
+  const text =
     "우리 가족에게 맞는 안온한 여행지를 골라봤어요 🌿";
-
 
   if(navigator.share){
 
@@ -2548,35 +1621,27 @@ async function shareResult(){
         url:location.href
       });
 
-    }
-    catch(e){}
+    }catch(e){}
 
-  }
-
-  else{
+  }else{
 
     try{
 
-      await navigator
-        .clipboard
-        .writeText(location.href);
+      await navigator.clipboard.writeText(
+        location.href
+      );
 
       alert("링크를 복사했어요 💌");
 
-    }
+    }catch(e){
 
-    catch(e){
-
-      alert(
-        "주소창의 링크를 복사해 가족에게 보내주세요."
-      );
+      alert("공유 기능은 사이트 공개 후 더 자연스럽게 작동해요.");
 
     }
 
   }
 
 }
-
 
 function feedback(value){
 
@@ -2591,19 +1656,22 @@ function feedback(value){
 
 }
 
-
 function instagram(){
 
   alert(
-    "인스타 계정 주소가 확정되면 이 버튼에서 바로 이동하도록 연결할게요."
+    "나중에 실제 인스타그램 주소를 연결하면 바로 이동하게 만들 수 있어요."
   );
 
 }
 
+function restart(){
+  go("conditions");
+}
 
 renderPeople();
 renderSavedFamilyLanding();
 
 </script>
+
 </body>
 </html>
