@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>안온한 여행 V5</title>
+  <title>안온한 여행 V6</title>
 
   <style>
     :root{
@@ -668,7 +668,7 @@
         모두가 조금씩 만족하는 하루를 찾아드릴게요.
       </p>
 
-      <div id="savedFamilyLanding"></div>
+      <div id="savedFamilyLanding"></div><button class="secondary" onclick="openTripLibrary()">저장한 여행 보기</button>
 
       <button class="primary" onclick="startNewFamily()">
         새로 여행 취향 설정하기 →
@@ -753,6 +753,7 @@
       <div class="field">
         <label>📍 어디서 출발하세요?</label>
         <input id="startArea" placeholder="예: 부천시, 안양시, 안산시">
+      </div><div class="field"><label for="targetArea">🧭 원하는 지역이 있나요? (선택)</label><input id="targetArea" placeholder="예: 파주시, 인천광역시 · 비우면 여러 지역 추천"><p class="small">지역을 지정하면 이동 범위보다 그 지역을 우선해 검색해요.</p>
       </div>
 
       <div class="field">
@@ -799,6 +800,7 @@
   </section>
 
 
+  <section class="page" id="savedTrips"><h2>저장한 여행</h2><p>이 브라우저에 최근 10개까지 저장됩니다.</p><div id="tripLibrary"></div><button class="secondary" onclick="go('landing')">처음으로</button></section>
   <!-- LOADING -->
   <section class="page" id="loading">
     <div class="loading">
@@ -834,7 +836,10 @@
 
     <div class="result-actions">
       <button class="primary" onclick="shareResult()">가족에게 공유하기 💌</button>
-      <button class="secondary" onclick="window.print()">이 결과 저장하기</button>
+      <button class="secondary" onclick="saveTrip()">여행 저장하기</button>
+      <button class="secondary" onclick="openTripLibrary()">저장한 여행</button>
+      <button class="secondary" id="moreTrips" onclick="moreTrips()">다른 지역 더 찾기</button>
+      <button class="secondary" onclick="window.print()">인쇄 / PDF로 저장</button>
       <button class="secondary" onclick="instagram()">@안온한조미언니 보러가기</button>
     </div>
 
@@ -2138,8 +2143,11 @@ function candidateCities(start,mode){
  const max={near:20,short:30,oneHour:50,twoHours:100}[mode]||50;
  const nearby=citySeeds.map(c=>({...c,originKm:km(start,c)})).filter(c=>c.originKm<=max).sort((a,b)=>a.originKm-b.originKm);
  if(mode==='near')return [{...start,local:true,radius:20000}];
- // 모든 권역 내 도시를 탐색하므로 가까운 도시만으로 후보 수가 소진되지 않습니다.
- return [{...start,local:true,radius:mode==='short'?10000:15000},...nearby];
+ // 거리순 목록 전체에서 고르게 뽑아 가까운 도시만 선택되는 것을 방지합니다.
+ const cap={short:5,oneHour:8,twoHours:11}[mode]||8;
+ const pool=nearby.filter(c=>c.name!==cleanRegion(start.name));
+ const selected=pool.length<=cap?pool:Array.from({length:cap},(_,i)=>pool[Math.round(i*(pool.length-1)/(cap-1))]);
+ return [{...start,local:true,radius:mode==='short'?10000:15000},...selected];
 }
 async function apiSearch(params){
  const response=await fetch('/.netlify/functions/kakao-search?'+new URLSearchParams(params),{signal:AbortSignal.timeout(15000)});
@@ -2154,47 +2162,108 @@ function collectSearchKeywords(){
  const out=[];
  for(let i=0;queues.some(q=>q.length>i);i++)for(const q of queues)if(q[i]&&!out.includes(q[i]))out.push(q[i]);
  for(const k of ['공원','박물관','체험관','카페'])if(!out.includes(k))out.push(k);
- return out.slice(0,12);
+ return out.slice(0,4);
+}
+const TRIP_LAST='anonhan-last-trip-v6', TRIP_SAVED='anonhan-saved-trips-v6';
+function readTrips(key,fallback){try{return JSON.parse(localStorage.getItem(key))||fallback;}catch{return fallback;}}
+function writeTrips(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{return false;}}
+function tripSnapshot(){return {version:6,at:Date.now(),people:state.people,prefs:state.prefs,conditions:state.conditions,start:state.start,results:state.results,session:state.session,query:document.getElementById('startArea').value,mode:document.getElementById('driveTime').value,target:document.getElementById('targetArea').value};}
+function persistTrip(){const ok=writeTrips(TRIP_LAST,tripSnapshot());if(!ok)document.getElementById('resultError').textContent='브라우저 저장 공간이 부족하거나 저장이 차단되어 자동 보관하지 못했어요.';return ok;}
+function restoreTrip(trip){
+ if(!trip||trip.version!==6||!Array.isArray(trip.results)||!trip.results.length)return false;
+ state.people=trip.people||[];state.prefs=trip.prefs||{};state.conditions=trip.conditions||{indoor:'no',walk:'low',duration:'day'};state.start=trip.start;state.results=trip.results;state.session=trip.session;
+ document.getElementById('targetArea').value=trip.target||'';document.getElementById('startArea').value=trip.query||'';document.getElementById('driveTime').value=trip.mode||'oneHour';
+ document.querySelectorAll('.segmented').forEach(group=>group.querySelectorAll('button').forEach(b=>b.classList.toggle('selected',b.dataset.value===state.conditions[group.dataset.group])));
+ renderPreferences();showTrip();return true;
+}
+function saveTrip(){
+ if(!state.results.length){alert('먼저 여행을 찾아주세요.');return;}
+ const trip=tripSnapshot(),items=readTrips(TRIP_SAVED,[]);
+ const fingerprint=JSON.stringify([trip.session?.key,trip.results.map(r=>[r.name,r.places.map(p=>p.id)])]);
+ const next=[{...trip,fingerprint},...(Array.isArray(items)?items:[]).filter(t=>t.fingerprint!==fingerprint)].slice(0,10);
+ if(writeTrips(TRIP_SAVED,next)){alert('여행을 저장했어요. 저장한 여행에서 다시 열 수 있어요.');renderTripLibrary();}else alert('저장하지 못했어요. 브라우저 저장 공간과 설정을 확인해주세요.');
+}
+function renderTripLibrary(){
+ const box=document.getElementById('tripLibrary');box.innerHTML='';
+ const saved=readTrips(TRIP_SAVED,[]);
+ if(!Array.isArray(saved)||!saved.length){box.textContent='저장한 여행이 아직 없습니다.';return;}
+ saved.forEach((trip,index)=>{
+  const row=document.createElement('div');row.className='saved-box';
+  const open=document.createElement('button');open.className='secondary';open.textContent=`${new Date(trip.at).toLocaleDateString('ko-KR')} · ${(trip.results||[]).map(r=>r.name).join(' / ')}`;
+  open.onclick=()=>{if(restoreTrip(trip))persistTrip();};
+  const remove=document.createElement('button');remove.className='secondary';remove.textContent='삭제';remove.onclick=()=>{if(confirm('이 여행을 저장 목록에서 삭제할까요?')){const next=saved.filter((_,i)=>i!==index);if(writeTrips(TRIP_SAVED,next))renderTripLibrary();}};
+  row.append(open,remove);box.append(row);
+ });
+}
+function openTripLibrary(){renderTripLibrary();go('savedTrips');}
+function searchKey(query,mode){return JSON.stringify({query,mode,target:document.getElementById('targetArea').value.trim(),people:state.people,prefs:state.prefs,conditions:state.conditions});}
+function showTrip(){
+ renderResults();const s=state.session;
+ document.getElementById('resultSummary').textContent=`${state.start.name} 출발 · ${s?.target?s.target+' 지역에서 찾은 추천입니다.':'확인한 장소에서 고른 추천입니다.'} 실제 이동시간과 운영 정보는 지도에서 확인해주세요.${s?.failures?' 일부 검색이 실패해 결과가 제한될 수 있어요.':''}${!s?.target&&state.results.length<3?' 조건에 맞는 지역이 부족해 확인된 지역만 표시합니다.':''}`;
+ document.getElementById('moreTrips').disabled=!s||s.offset>=s.jobs.length;
+ document.getElementById('moreTrips').textContent=s&&s.offset<s.jobs.length?'다른 지역 더 찾기':'준비된 지역을 모두 확인했어요';go('result');
 }
 async function findAnonhanTrip(){
  if(state.searching)return;
- const query=document.getElementById('startArea').value.trim();if(!query){alert('출발지역을 입력해주세요.');return;}
- state.searching=true;state.results=[];document.getElementById('resultSummary').textContent='';go('loading');
+ const query=document.getElementById('startArea').value.trim(),mode=document.getElementById('driveTime').value;
+ if(!query){alert('출발지역을 입력해주세요.');return;}
+ const key=searchKey(query,mode),cached=readTrips(TRIP_LAST,null);
+ if(cached?.session?.key===key&&restoreTrip(cached))return;
+ state.searching=true;go('loading');document.querySelector('#loading h2').textContent='출발지를 확인하고 있어요.';
  try{
-  const a=await apiSearch({type:'address',query});if(!a.found)throw new Error('출발지역을 찾지 못했어요. 시·군·구를 포함해 입력해주세요.');
-  state.start={name:a.address,x:Number(a.x),y:Number(a.y)};
-  const mode=document.getElementById('driveTime').value, cities=candidateCities(state.start,mode), keywords=collectSearchKeywords();
-  const jobs=cities.flatMap(city=>keywords.map(keyword=>({city,keyword})));let failures=0,done=0;const unique=new Map();
-  await mapLimit(jobs,5,async({city,keyword})=>{
+  const a=await apiSearch({type:'address',query});if(!a.found)throw Error('출발지역을 찾지 못했어요. 시·군·구를 포함해주세요.');
+  state.start={name:a.address,x:Number(a.x),y:Number(a.y)};state.results=[];
+  const target=document.getElementById('targetArea').value.trim();
+  let cities=candidateCities(state.start,mode),targetRegion='';
+  if(target){
+   const destination=await apiSearch({type:'address',query:target});
+   if(!destination.found)throw Error('원하는 지역을 찾지 못했어요. 파주시, 인천광역시처럼 입력해주세요.');
+   const normalized=destination.address.replace(/^경기도/,'경기').replace(/^서울특별시/,'서울').replace(/^인천광역시/,'인천').replace(/^강원특별자치도/,'강원').replace(/^충청남도/,'충남');
+   targetRegion=cleanRegion(normalized);
+   cities=citySeeds.filter(c=>c.name===targetRegion||c.name.startsWith(targetRegion+' '));
+   if(!cities.length)cities=[{name:targetRegion,x:Number(destination.x),y:Number(destination.y),local:false}];
+  }
+  const keywords=collectSearchKeywords();
+  // 첫 단계부터 가까운 곳과 먼 곳이 섞이도록 전체 거리대에서 도시 순서를 구성합니다.
+  const ordered=[];for(let parity=0;parity<2;parity++)for(let i=parity;i<cities.length;i+=2)ordered.push(cities[i]);
+  const jobs=[];for(let k=0;k<keywords.length;k+=2)for(const city of ordered)for(const keyword of keywords.slice(k,k+2))jobs.push({city,keyword});
+  state.session={key,mode,target:targetRegion,jobs,offset:0,places:[],failures:0};
+ }catch(e){document.getElementById('resultError').textContent=e.message;go('result');state.searching=false;return;}
+ state.searching=false;await moreTrips();
+}
+async function moreTrips(){
+ if(state.searching||!state.session)return;
+ state.searching=true;go('loading');const s=state.session;let done=0;
+ const batch=s.jobs.slice(s.offset,s.offset+12),unique=new Map(s.places.map(p=>[p.id,p]));
+ document.querySelector('#loading h2').textContent=`가족에게 맞는 장소를 찾고 있어요. 0/${batch.length}`;
+ try{
+  await mapLimit(batch,4,async({city,keyword})=>{
    try{
-    const params={type:'keyword',query:city.local?keyword:`${city.name} ${keyword}`};
+    const params={type:'keyword',query:city.local?keyword:city.name+' '+keyword};
     if(city.local)Object.assign(params,{x:city.x,y:city.y,radius:city.radius});
     const r=await apiSearch(params);
     for(const p of r.places||[]){
-     if(isBadPlace(p)||isRiskyPlace(p))continue;
-     if(!city.local&&cleanRegion(p.address)!==city.name)continue;
+     if(isBadPlace(p)||isRiskyPlace(p)||(!city.local&&cleanRegion(p.address)!==city.name))continue;
      const distance=km(state.start,p)*1000;
-     if(city.local&&distance>city.radius)continue;
-     if(distance>({near:20000,short:40000,oneHour:65000,twoHours:120000}[mode]))continue;
+     if(!s.target&&((city.local&&distance>city.radius)||distance>({near:20000,short:40000,oneHour:65000,twoHours:120000}[s.mode])))continue;
      const id=p.id||`${p.name}|${p.x}|${p.y}`;
      if(!unique.has(id))unique.set(id,{...p,id,distance,searchKeyword:placeKind(p),kakaoUrl:/^https?:\/\/(?:place\.map\.kakao\.com|map\.kakao\.com)\//.test(p.kakaoUrl||'')?p.kakaoUrl:''});
     }
-   }catch(e){failures++;}
-   done++;document.querySelector('#loading h2').textContent=`가족에게 맞는 장소를 찾고 있어요. ${done}/${jobs.length}`;
+   }catch{s.failures++;}
+   done++;document.querySelector('#loading h2').textContent=`가족에게 맞는 장소를 찾고 있어요. ${done}/${batch.length}`;
   });
-  if(failures===jobs.length)throw new Error('장소 검색 요청이 모두 실패했습니다. 잠시 후 다시 시도해주세요.');
-  const groups=new Map();for(const p of unique.values()){const name=cleanRegion(p.address);if(!groups.has(name))groups.set(name,{name,places:[]});groups.get(name).places.push(p);}
+  s.offset+=batch.length;s.places=[...unique.values()];
+  const groups=new Map();for(const p of s.places){const name=cleanRegion(p.address);if(!groups.has(name))groups.set(name,{name,places:[]});groups.get(name).places.push(p);}
   state.results=[...groups.values()].filter(r=>r.places.length>=2).map(r=>({...r,score:scoreRegion(r)})).sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name)).slice(0,3);
-  if(!state.results.length)throw new Error('필터를 통과한 장소가 충분한 지역을 찾지 못했어요. 이동 범위나 취향을 바꿔주세요.');
-  renderResults();
-  document.getElementById('resultSummary').textContent=`${state.start.name} 출발 · ${cities.length}개 검색 중심에서 찾은 추천 ${state.results.length}곳입니다. 이동 범위는 대략적인 탐색 기준이며 실제 운전시간은 지도에서 확인해주세요. 점수는 취향 일치와 장소 다양성 기준입니다.${failures?` 일부 검색(${failures}건)이 실패해 결과가 제한될 수 있어요.`:''}${state.results.length<3?' 조건에 맞는 지역이 3곳보다 적어 확인된 지역만 표시합니다.':''}`;
-  go('result');
- }catch(e){document.getElementById('resultCards').innerHTML='';document.getElementById('resultError').innerHTML=`<div class="error-box">${escapeHtml(e.message)}</div>`;go('result');}
- finally{state.searching=false;}
+  showTrip();
+  if(state.results.length)persistTrip();
+  else document.getElementById('resultError').textContent='이번 검색에서 조건에 맞는 지역을 충분히 찾지 못했어요. 다른 지역 더 찾기를 눌러 이어서 확인할 수 있어요.';
+ }finally{state.searching=false;}
 }
 
 renderPeople();
 renderSavedFamilyLanding();
+restoreTrip(readTrips(TRIP_LAST,null));
 
 </script>
 </body>
